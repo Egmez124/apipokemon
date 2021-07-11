@@ -1,8 +1,8 @@
-const Pokemon = ({name, type})=> {
+const Pokemon = ({name})=> {
     return(
         <div>
             <div>{name}</div>
-            <div>{type}</div>
+            
             
         </div>
     )

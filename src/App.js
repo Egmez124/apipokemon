@@ -12,30 +12,30 @@ function App() {
       const func = async ()=> {
         const res = await getPokemon(queryTerm)
         setData(res)
+        //console.log(res)
       }
 
       func()
+      
     }
   }, [queryTerm])
+
+  const info = data.map((item)=><Pokemon key={item.id} name={item.name}/>)
 
   const HandleSearch = query => {
     SetQueryTerm(query)
   }
 
-  const list = data.map((item)=> <Pokemon
-    name={item.pokemon.pokemon.name}
-    type={item.name}
-    id={item.pokemon.pokemon.name}
-  />)
-
+  console.log(data)
   return (
     <div className="App">
       <header className="App-header">
         <SearchBox onSearch={HandleSearch} />
-        {list}
+        {info}
       </header>
     </div>
   );
+
 }
 
 export default App;

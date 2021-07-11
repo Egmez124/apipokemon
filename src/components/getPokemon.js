@@ -2,4 +2,5 @@ export const getPokemon = async(queryTerm) => {
     const url = `https://pokeapi.co/api/v2/type/${queryTerm}/`
     const data = await fetch(url).then((res)=> res.json())
     return data 
+    console.log(data)
 }
