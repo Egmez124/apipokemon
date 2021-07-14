@@ -1,9 +1,13 @@
-const Pokemon = ({name})=> {
+const Pokemon = ({name, url})=> {
     return(
-        <div>
-            <div>{name}</div>
-            
-            
+        <div className="pokemon-card">
+            <div className="pokemon-img">
+                
+            </div>
+            <div>
+                <div>{name}</div>
+                <div>{url}</div>
+            </div>
         </div>
     )
 }
