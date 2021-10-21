@@ -8,8 +8,9 @@ import Pokedex from './components/Pokedex';
 
 function App() {
   const [data, setData] = useState([])
-  const [queryTerm, SetQueryTerm] = useState('normal')
+  const [queryTerm, SetQueryTerm] = useState('')
   const [pokemon, setPokemon] = useState([])
+  const [loadding, setLoadding] = useState(false)
 
   useEffect(()=>{
     if (queryTerm) {
@@ -24,24 +25,27 @@ function App() {
     }
   }, [queryTerm])
 
-  const info = data.slice(0, 10).map((item)=><Pokemon key={item.id} name={item.pokemon.name} url={item.pokemon.url}/>)
+  const info = pokemon.map((item)=><Pokemon key={item.id} name={item.name} img={item.sprites.front_default} typesPokemon={item.types}/>)
 
   const HandleSearch = query => {
     SetQueryTerm(query)
   }
 
-  const fetchPokemons = async ()=>{
-    const promises = data.slice(0, 10).map(async(item)=>{
-      return await getPokemonData(item.pokemon.name)
-    })
-    const results = await Promise.all(promises)
-    setPokemon(results)
-    
-  }
   useEffect(()=>{
-    fetchPokemons()
-  }, [])
-  console.log(pokemon)
+    if (data){
+      const fetchPokemons = async ()=>{
+        const promises = data.slice(0, 12).map(async(item)=>{
+        return await getPokemonData(item.pokemon.name)
+        })
+        const results = await Promise.all(promises)
+        setPokemon(results)
+        setLoadding(true)
+      }
+      fetchPokemons()
+    }
+  }, [data])
+
+  console.log()
  
   return (
     <div>
@@ -49,9 +53,13 @@ function App() {
       <div className="App">
         <SearchBox onSearch={HandleSearch} />
         <Pokedex />
-        <div className="pokedex-grid">
-          
+        {!loadding?(
+          <div>Cargando...</div>
+        ):(
+          <div className="pokedex-grid">
+          {info}
         </div>
+        )}
       
       </div>
     </div>
